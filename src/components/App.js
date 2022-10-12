@@ -36,13 +36,43 @@ function App() {
   return (
     <RecipeContext.Provider value={RecipeContextValue}>
       <Heading />
-      <RecipeList styles={selectedRecipe ?  "recipe-list" : "recipe-list recipe-list--wide"} recipes={recipes.filter((recipe) => recipe.name.toLocaleLowerCase().includes(searchSubstr.toLocaleLowerCase()))} />
+      <RecipeList
+        styles={
+          selectedRecipe ? "recipe-list" : "recipe-list recipe-list--wide"
+        }
+        recipes={searchInRecipe(searchSubstr, recipes)}
+      />
       {selectedRecipe && <RecipeEdit recipe={selectedRecipe} />}
     </RecipeContext.Provider>
   );
 
   function searchingFunction(substr) {
     setSearchSubstr(substr);
+  }
+
+  function searchInRecipe(substr, recipeArr) {
+    if (!substr) return recipeArr;
+
+    let filteredArr = recipeArr.filter((element) => {
+      let values = Object.values(element);
+      if (
+        values.some((value) => {
+          if (
+            typeof value === "string" &&
+            value.toLowerCase().includes(substr.toLowerCase())
+          )
+            return true;
+          if (Array.isArray(value) && searchInRecipe(substr, value).length)
+            return true;
+          return false;
+        })
+      ) {
+        return true;
+      }
+      return false;
+    });
+
+    return filteredArr;
   }
 
   function handleRecipeChange(id, recipe) {

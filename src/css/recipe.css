@@ -2,12 +2,14 @@
   padding: 20px;
   padding-bottom: 40px;
   border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
 }
 
-.recipe:last-child {
+/* .recipe:last-child {
   padding-bottom: 10px;
   border-bottom: none;
-}
+} */
 
 .recipe__header {
   display: flex;

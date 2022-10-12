@@ -3,7 +3,6 @@ import { RecipeContext } from "./App";
 
 export default function Searching() {
   const { searchingFunction } = useContext(RecipeContext);
-  let inputSearch = null;
   return (
     <div className="searching">
       <label className="searching__label" htmlFor="search">
@@ -14,18 +13,15 @@ export default function Searching() {
         type="text"
         name="search"
         id="search"
-        onChange={(e) => {
-          inputSearch = e.target;
-          console.log(inputSearch, e.target);
-          searchingFunction(e.target.value);
-        }}
+        onChange={(e) => searchingFunction(e.target.value)}
       />
       <div className="search__delete-btn-wrapper">
         <button
           onClick={() => {
             document.querySelector(".searching__input").value = "";
+            searchingFunction("");
           }}
-          className="btn btn--danger"
+          className="btn btn--danger search__delete-btn"
         >
           &times;
         </button>
