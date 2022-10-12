@@ -1,10 +1,14 @@
 import React, { useContext } from "react";
 import RecipeIngEdit from "./RecipeIngEdit";
+import RecipeAuthorEdit from "./RecipeAuthorEdit";
 import { RecipeContext } from "./App";
 import uuidv4 from "../../node_modules/uuid/dist/v4";
 
 export default function RecipeEdit({ recipe }) {
-  const { handleRecipeChange, handleRecipeSelect } = useContext(RecipeContext);
+  const {
+    handleRecipeChange,
+    handleRecipeSelect,
+  } = useContext(RecipeContext);
 
   function handleChange(changes) {
     handleRecipeChange(recipe.id, { ...recipe, ...changes });
@@ -32,6 +36,27 @@ export default function RecipeEdit({ recipe }) {
     });
   }
 
+  function handleAuthorChange(id, author) {
+    const newAuthor = [...recipe.authors];
+    const index = newAuthor.findIndex((i) => i.id === id);
+    newAuthor[index] = author;
+    handleChange({ authors: newAuthor });
+  }
+
+  function handleAuthorAdd() {
+    const newAuthor = {
+      id: uuidv4(),
+      name: "",
+    };
+    handleChange({ authors: [...recipe.authors, newAuthor] });
+  }
+
+  function handleAuthorDelete(id) {
+    handleChange({
+      authors: recipe.authors.filter((auth) => auth.id !== id),
+    });
+  }
+
   return (
     <div className="recipe-edit">
       <div className="recipe-edit__remove-button-container">
@@ -53,17 +78,6 @@ export default function RecipeEdit({ recipe }) {
           id="name"
           value={recipe.name}
           onChange={(e) => handleChange({ name: e.target.value })}
-        />
-        <label className="recipe-edit__label" htmlFor="author">
-          Author
-        </label>
-        <input
-          className="recipe-edit__input"
-          type="text"
-          name="author"
-          id="author"
-          value={recipe.author}
-          onChange={(e) => handleChange({ author: e.target.value })}
         />
         <label className="recipe-edit__label" htmlFor="cookTime">
           Cook Time
@@ -118,8 +132,30 @@ export default function RecipeEdit({ recipe }) {
         ))}
       </div>
       <div className="recipe-edit__add-ingredient-btn-container">
-        <button onClick={() => handleIngAdd()} className="btn btn--primary">
+        <button
+          onClick={() => handleIngAdd()}
+          className="btn btn--primary recipe-edit__add-btn "
+        >
           Add Ingredient
+        </button>
+      </div>
+      <label className="recipe-edit__label">Authors</label>
+      <div className="recipe-edit__authors-grid">
+        {recipe.authors.map((author) => (
+          <RecipeAuthorEdit
+            handleAuthorDelete={handleAuthorDelete}
+            handleAuthorChange={handleAuthorChange}
+            key={author.id}
+            author={author}
+          />
+        ))}
+      </div>
+      <div className="recipe-edit__add-author-btn-container">
+        <button
+          onClick={() => handleAuthorAdd()}
+          className="btn btn--primary recipe-edit__add-btn "
+        >
+          Add Author
         </button>
       </div>
     </div>

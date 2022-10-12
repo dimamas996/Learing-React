@@ -16,13 +16,75 @@
 
 html {
   font-size: 25px;
+  width: 100%;
+  height: 100%;
 }
 
 body {
+  width: 100%;
+  height: 100%;
   padding: 0;
   margin: 0;
+  background-color: rgb(255, 242, 226);
 }
 
 .mr-1 {
   margin-right: 5px;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 3fr;
+}
+
+.header {
+  text-align: center;
+  grid-column: span 2;
+  border-bottom: 1px solid black;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+
+input, textarea {
+  background-color: rgb(255, 242, 226);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(255, 242, 226);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.searching {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+}
+
+.searching__input {
+  font-size: 1.5rem;
+  width: 40%;
+  height: 40%;
+}
+
+.searching__label {
+  height: 40%;
+  display: flex;
+  align-items: center;
+  margin-right: 1vw;
 }

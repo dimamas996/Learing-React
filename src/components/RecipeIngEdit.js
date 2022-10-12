@@ -6,6 +6,7 @@ export default function RecipeIngEdit(props) {
   function handleChange(changes) {
     handleIngChange(ingredient.id, { ...ingredient, ...changes });
   }
+
   return (
     <>
       <input
@@ -20,9 +21,14 @@ export default function RecipeIngEdit(props) {
         type="text"
         onChange={(e) => handleChange({ amount: e.target.value })}
       />
-      <button onClick={()=> {
-        handleIngDelete(ingredient.id)
-      }} className="btn btn--danger">&times;</button>
+      <button
+        onClick={() => {
+          handleIngDelete(ingredient.id);
+        }}
+        className="btn btn--danger"
+      >
+        &times;
+      </button>
     </>
   );
 }

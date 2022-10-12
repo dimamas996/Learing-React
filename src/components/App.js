@@ -3,6 +3,7 @@ import RecipeList from "./RecipeList";
 import "../css/App.css";
 import uuidv4 from "../../node_modules/uuid/dist/v4";
 import RecipeEdit from "./RecipeEdit";
+import Heading from "./Heading";
 
 export const RecipeContext = React.createContext();
 const LOCAL_STORAGE_KEY = "firstproject.recipes";
@@ -10,6 +11,7 @@ const LOCAL_STORAGE_KEY = "firstproject.recipes";
 function App() {
   const [selectedRecipeId, setSelecedRecipeId] = useState();
   const [recipes, setRecipes] = useState(sampleRecipes);
+  const [recipesForSearch, setRecipesForSearch] = useState(recipes);
   const selectedRecipe = recipes.find(
     (recipe) => recipe.id === selectedRecipeId
   );
@@ -28,14 +30,27 @@ function App() {
     handleRecipeDelete,
     handleRecipeSelect,
     handleRecipeChange,
+    searchingFunction,
   };
 
   return (
     <RecipeContext.Provider value={RecipeContextValue}>
-      <RecipeList recipes={recipes} />
+      <Heading />
+      <RecipeList recipes={recipesForSearch} />
       {selectedRecipe && <RecipeEdit recipe={selectedRecipe} />}
     </RecipeContext.Provider>
   );
+
+  function searchingFunction(substr) {
+    if (!substr) {
+      setRecipesForSearch(recipes)
+    }
+    setRecipesForSearch(
+      recipes.filter((recipe) =>
+        recipe.name.toLocaleLowerCase().includes(substr.toLocaleLowerCase())
+      )
+    );
+  }
 
   function handleRecipeChange(id, recipe) {
     const newRecipes = [...recipes];
