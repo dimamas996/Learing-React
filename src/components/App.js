@@ -11,7 +11,7 @@ const LOCAL_STORAGE_KEY = "firstproject.recipes";
 function App() {
   const [selectedRecipeId, setSelecedRecipeId] = useState();
   const [recipes, setRecipes] = useState(sampleRecipes);
-  const [recipesForSearch, setRecipesForSearch] = useState(recipes);
+  const [searchSubstr, setSearchSubstr] = useState("");
   const selectedRecipe = recipes.find(
     (recipe) => recipe.id === selectedRecipeId
   );
@@ -36,20 +36,13 @@ function App() {
   return (
     <RecipeContext.Provider value={RecipeContextValue}>
       <Heading />
-      <RecipeList recipes={recipesForSearch} />
+      <RecipeList styles={selectedRecipe ?  "recipe-list" : "recipe-list recipe-list--wide"} recipes={recipes.filter((recipe) => recipe.name.toLocaleLowerCase().includes(searchSubstr.toLocaleLowerCase()))} />
       {selectedRecipe && <RecipeEdit recipe={selectedRecipe} />}
     </RecipeContext.Provider>
   );
 
   function searchingFunction(substr) {
-    if (!substr) {
-      setRecipesForSearch(recipes)
-    }
-    setRecipesForSearch(
-      recipes.filter((recipe) =>
-        recipe.name.toLocaleLowerCase().includes(substr.toLocaleLowerCase())
-      )
-    );
+    setSearchSubstr(substr);
   }
 
   function handleRecipeChange(id, recipe) {

@@ -1,12 +1,18 @@
 .recipe-list {
-    border-right: 1px solid black;
-    height: 100%;
-    width: 100%;
-    overflow-y: scroll;
+  border-right: 1px solid black;
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
+}
+
+.recipe-list--wide {
+  grid-column: span 2;
+  padding-left: 20%;
+  padding-right: 20%;
 }
 
 .recipe-list__add-recipe-btn-container {
-    text-align: center;
-    padding-top: 30px;
-    padding-bottom: 30px;
+  text-align: center;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
